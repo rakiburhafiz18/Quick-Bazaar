@@ -282,17 +282,29 @@ function showCategory(category){
   window.scrollTo({top:500,behavior:"smooth"});
 }
 
-function shopNow(){
+function shopNow(){ 
   window.scrollTo({top:500,behavior:"smooth"});
 }
 
 function openCart(){
-  if(cartCount===0){
+  let items=[];
+
+  document.querySelectorAll(".card").forEach(card=>{
+    let button=card.querySelector(".add");
+
+    if(button && button.classList.contains("added")){
+      let name=card.querySelector("h3").innerText;
+      let price=card.querySelector(".price").innerText;
+      items.push(name+" - "+price);
+    }
+  });
+
+  if(items.length===0){
     alert("Your cart is empty.");
   }else{
-    alert("You have "+cartCount+" item(s) in your cart.");
+    alert("🛒 YOUR CART\n\n"+items.join("\n")+"\n\nTotal items: "+items.length);
   }
-}
+                   } 
 
 function wishlist(){
   alert("Wishlist feature is ready for the next update ❤️");
