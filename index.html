@@ -41,11 +41,29 @@
 .profile-card{background:linear-gradient(135deg,#087f3d,#0a9b4d);color:#fff;border-radius:16px;padding:16px;display:flex;align-items:center;gap:12px;margin-bottom:12px}
 .quickstats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin:10px 0}.quickstat{background:#f4f8f4;border-radius:11px;text-align:center;padding:10px 4px;font-size:10px}.quickstat b{display:block;font-size:17px;color:#087f3d;margin-bottom:2px}
 .account-form label{font-size:10px;color:#68736d;display:block;margin-top:7px}.address-actions{display:flex;gap:6px;margin-top:8px}.address-actions button{flex:1}
+
+<style>
+.location{display:flex!important;align-items:center!important;gap:6px!important;max-width:205px!important;min-width:0!important;text-align:left!important;padding:4px 2px!important;background:transparent!important}
+.location .locpin{font-size:16px;flex:0 0 auto}.location .loctext{display:block;min-width:0;line-height:13px}
+.location .loctext small{display:block!important;font-size:8px!important;line-height:10px!important;opacity:.75}
+.location .loctext b{display:block!important;font-size:12px!important;line-height:15px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:145px}
+.location .locarrow{font-size:20px;opacity:.8;line-height:20px}
+.address-sheet{padding:18px 16px 24px!important;background:#fff!important}
+.address-title{font-size:20px!important;margin:0!important}.address-subtitle{font-size:10px;color:#7a847e;margin:3px 0 14px}
+.address-current{background:#eef9ee;border:1.5px solid #8bd19b;border-radius:14px;padding:11px 12px;margin-bottom:10px}
+.address-current .row{display:flex;align-items:center;gap:8px}.address-current .check{margin-left:auto;background:#087f3d;color:#fff;border-radius:20px;padding:3px 8px;font-size:9px;font-weight:bold}
+.address-card2{border:1px solid #e1e7e3;border-radius:14px;padding:12px;margin:9px 0;background:#fff}
+.address-card2.selected{border:1.5px solid #087f3d;box-shadow:0 2px 10px rgba(8,127,61,.08)}
+.address-card2 .label{font-size:13px;font-weight:800}.address-card2 .addrtext{font-size:11px;line-height:16px;color:#68736d;margin-top:4px}
+.address-buttons{display:flex;gap:7px;margin-top:10px}.address-buttons button{border:0;border-radius:9px;padding:9px 7px;font-weight:bold;font-size:11px}.use-btn{flex:1;background:#087f3d;color:#fff}.edit-btn{background:#e8f8e5;color:#087f3d}.del-btn{background:#fff0f1;color:#d52d3b}
+.add-address-btn{width:100%;border:1.5px dashed #62b878;border-radius:12px;background:#f6fff7;color:#087f3d;padding:13px;font-weight:800;margin-top:6px}
+.gps-btn{width:100%;border:0;border-radius:11px;background:#eef6ff;color:#2364a3;padding:11px;font-weight:700;margin:8px 0}
+</style>
 </style></style>
 </head>
 
 <body>
-<header class="header"><div class="top"><div class="logo">Quick <span>Bazaar</span></div><div class="top-right"><button class="location" onclick="openAddress()"><span style="font-size:14px">📍</span><span style="display:block;min-width:0;text-align:left"><b id="headAddress">Juria Bazar, Assam</b><small id="headAddressSub">Tap to change</small></span></button><button class="profile-btn" onclick="openProfile()">👤</button></div></div><div class="search">🔍<input id="search" placeholder="Search products, brands and more..." autocomplete="off"></div></header>
+<header class="header"><div class="top"><div class="logo">Quick <span>Bazaar</span></div><div class="top-right"><button class="location" onclick="openAddress()"><span class="locpin">📍</span><span class="loctext"><small>Deliver to</small><b id="headAddress">Juria Bazar, Assam</b></span><span class="locarrow">›</span></button><button class="profile-btn" onclick="openProfile()">👤</button></div></div><div class="search">🔍<input id="search" placeholder="Search products, brands and more..." autocomplete="off"></div></header>
 <div class="categories">
 <div class="cat" onclick="filterCategory('all')"><div class="catbox">🛒</div>All</div>
 <div class="cat" onclick="filterCategory('fresh')"><div class="catbox">🥬</div>Fresh</div>
@@ -141,10 +159,32 @@ function loginCustomer(){
 function logout(){localStorage.removeItem('qb_user');closeSheet();toast('Logged out')}
 function openAddress(){
 let addresses=getAddresses(),selected=localStorage.getItem('qb_selected_address');
-document.getElementById('sheet').innerHTML=`<div class="sheethead"><h2>📍 My Addresses</h2><button class="close" onclick="closeSheet()">✕</button></div>
-${addresses.length?addresses.map(a=>`<div class="addresscard"><b>${a.label||'Home'} ${a.id==selected?'✓ Selected':''}</b><span>${a.text.replace(/\n/g,'<br>')}</span><div class="address-actions"><button class="formbtn alt" onclick="selectAddress('${a.id}')">Use</button><button class="formbtn alt" onclick="editAddress('${a.id}')">Edit</button><button class="formbtn" style="background:#ffe8eb;color:#d62839" onclick="deleteAddress('${a.id}')">Delete</button></div></div>`).join(''):`<div class="empty"><div>📍</div><h3>No address added</h3><p>Add your delivery address for checkout.</p></div>`}
-<button class="formbtn" onclick="openAddAddress()">＋ Add New Address</button>`;
+document.getElementById('sheet').innerHTML=
+`<div class="address-sheet">
+ <div class="sheethead"><div><h2 class="address-title">📍 Delivery Address</h2><div class="address-subtitle">Choose where you want your order delivered</div></div><button class="close" onclick="closeSheet()">✕</button></div>
+ ${addresses.length ? addresses.map(a=>`
+ <div class="address-card2 ${a.id==selected?'selected':''}">
+   <div class="row"><span class="label">${a.label||'Home'}</span>${a.id==selected?'<span class="check">✓ SELECTED</span>':''}</div>
+   <div class="addrtext">${a.text.replace(/\\n/g,'<br>')}</div>
+   <div class="address-buttons">
+     ${a.id!=selected?`<button class="use-btn" onclick="selectAddress('${a.id}')">Use this address</button>`:`<button class="use-btn" onclick="closeSheet()">✓ Using this address</button>`}
+     <button class="edit-btn" onclick="editAddress('${a.id}')">Edit</button>
+     <button class="del-btn" onclick="deleteAddress('${a.id}')">Delete</button>
+   </div>
+ </div>`).join('') : `
+ <div class="empty"><div>📍</div><h3>No address saved</h3><p>Add an address for faster checkout.</p></div>`}
+ <button class="add-address-btn" onclick="openAddAddress()">＋ Add New Address</button>
+ <button class="gps-btn" onclick="useCurrentLocation()">◎ Use my current location</button>
+</div>`;
 document.getElementById('overlay').style.display='block';
+}
+function useCurrentLocation(){
+if(!navigator.geolocation){toast('Location not supported');return}
+toast('Requesting location…');
+navigator.geolocation.getCurrentPosition(
+ pos=>{localStorage.setItem('qb_gps',JSON.stringify({lat:pos.coords.latitude,lng:pos.coords.longitude}));toast('Location permission received ✓');},
+ ()=>toast('Location permission denied. Add address manually.')
+);
 }
 function editAddress(id){
 let a=getAddresses().find(x=>x.id==id);if(!a)return;
@@ -173,7 +213,17 @@ function saveAddress(){
   let a=getAddresses();let id=String(Date.now());a.push({id,label:'Home',text:`${name}, ${phone}\n${line}, ${city}, ${state} - ${pin}`});setAddresses(a);localStorage.setItem('qb_selected_address',id);updateHeaderAddress();toast('Address saved ✓');openAddress();
 }
 function selectAddress(id){localStorage.setItem('qb_selected_address',id);updateHeaderAddress();toast('Address selected ✓');openAddress()}
-function updateHeaderAddress(){let a=getSelectedAddress();if(a){let first=(a.text||'').split(',')[2]||'Saved address';document.getElementById('headAddress').innerText=first.trim().slice(0,26);document.getElementById('headAddressSub').innerText='Saved delivery address'}else{document.getElementById('headAddress').innerText='Juria Bazar, Assam';document.getElementById('headAddressSub').innerText='Tap to change'}}
+function updateHeaderAddress(){
+let a=getSelectedAddress();
+if(a){
+ let parts=(a.text||'').split(',').map(x=>x.trim());
+ let line=parts.length>=4?parts[parts.length-2]:parts[2]||'Juria Bazar, Assam';
+ let pin=(a.text||'').match(/(\d{6})$/);
+ document.getElementById('headAddress').innerText=(line+(pin?' - '+pin[1]:'')).slice(0,27);
+}else{
+ document.getElementById('headAddress').innerText='Juria Bazar, Assam';
+}
+}
 function openCheckout(){
   if(!getUser()){openProfile();toast('Please login first');return}
   if(!getSelectedAddress()){openAddAddress();toast('Add delivery address first');return}
