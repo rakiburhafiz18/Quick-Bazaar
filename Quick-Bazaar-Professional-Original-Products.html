@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b7d3b">
+<title>Quick Bazaar — Groceries & More</title>
+<style>
+:root{--green:#0b7d3b;--green2:#16a34a;--lime:#d9ff36;--ink:#18211c;--muted:#69736d;--bg:#f6f8f6;--card:#fff;--line:#e6ebe7;--red:#ef3f4f;--shadow:0 6px 20px rgba(20,40,28,.08)}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--ink);padding-bottom:82px}button,input{font:inherit}button{cursor:pointer}
+.header{position:sticky;top:0;z-index:40;background:linear-gradient(135deg,#08763a,#0c8d43);color:#fff;padding:13px 14px 14px;border-radius:0 0 22px 22px;box-shadow:0 5px 18px rgba(0,80,35,.18)}
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px}.brand{font-weight:950;font-size:24px;letter-spacing:-1px}.brand span{color:var(--lime)}.topright{display:flex;align-items:center;gap:7px;min-width:0}
+.loc{display:flex;align-items:center;gap:5px;background:transparent;border:0;color:#fff;text-align:left;min-width:0}.locpin{font-size:18px}.loctxt{min-width:0}.loctxt small{display:block;font-size:9px;opacity:.75}.loctxt b{display:block;font-size:12px;max-width:128px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.chev{font-size:20px}.profile{width:39px;height:39px;border:1px solid rgba(255,255,255,.25);border-radius:13px;background:rgba(255,255,255,.14);color:#fff;font-size:20px}
+.search{margin-top:12px;background:#fff;border-radius:15px;height:47px;display:flex;align-items:center;gap:9px;padding:0 13px;color:#777;box-shadow:0 3px 10px rgba(0,0,0,.08)}.search span{font-size:20px}.search input{width:100%;border:0;outline:0;background:transparent;font-size:14px;color:var(--ink)}
+.quick{display:flex;gap:8px;margin-top:10px;overflow:auto;scrollbar-width:none}.quick::-webkit-scrollbar{display:none}.quick button{white-space:nowrap;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.11);color:#fff;border-radius:999px;padding:7px 11px;font-size:11px;font-weight:700}
+.wrap{max-width:760px;margin:auto}.cats{display:flex;gap:12px;overflow:auto;padding:14px 12px 8px;background:#fff;scrollbar-width:none}.cats::-webkit-scrollbar{display:none}.cat{min-width:72px;text-align:center;border:0;background:transparent;color:#29342e;font-size:11px;font-weight:800}.caticon{width:66px;height:66px;margin:auto auto 6px;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:30px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.025)}.cat:nth-child(1) .caticon{background:#e8f8e5}.cat:nth-child(2) .caticon{background:#fff0dd}.cat:nth-child(3) .caticon{background:#f8e5fa}.cat:nth-child(4) .caticon{background:#f5eadc}.cat:nth-child(5) .caticon{background:#e5f1ff}.cat:nth-child(6) .caticon{background:#fff0cf}.cat:nth-child(7) .caticon{background:#e8eaff}
+.hero{margin:10px 12px;border-radius:20px;overflow:hidden;background:#e8f8e5;box-shadow:var(--shadow)}.hero img{width:100%;display:block;aspect-ratio:2.15/1;object-fit:cover}
+.service{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:4px 12px 7px}.service div{background:#fff;border:1px solid var(--line);border-radius:14px;padding:9px 7px;text-align:center;font-size:9px;font-weight:800}.service b{display:block;color:var(--green);font-size:16px;margin-bottom:2px}
+.section{padding:12px}.head{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px}.head h2{font-size:19px;letter-spacing:-.3px}.see{color:var(--green);font-size:11px;font-weight:900}
+.products{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.card{position:relative;background:var(--card);border:1px solid #edf0ed;border-radius:17px;padding:9px;box-shadow:var(--shadow);overflow:hidden}.pic{height:142px;border-radius:13px;background:linear-gradient(145deg,#f5f7f5,#edf1ee);display:flex;align-items:center;justify-content:center;font-size:65px;position:relative}.discount{position:absolute;left:9px;top:9px;background:var(--red);color:#fff;border-radius:7px;padding:5px 6px;font-size:9px;font-weight:900;z-index:2}.heart{position:absolute;right:8px;top:8px;width:32px;height:32px;border:0;border-radius:50%;background:#fff;box-shadow:0 3px 9px #0001;color:var(--green);font-size:19px;z-index:2}.heart.on{color:var(--red)}.card h3{font-size:12px;line-height:16px;margin:9px 2px 3px;min-height:31px}.price{font-weight:950;font-size:16px}.old{text-decoration:line-through;color:#9aa19d;font-size:10px;margin-left:4px}.unit{font-size:9px;color:#8a938e;margin-left:4px}.addrow{display:flex;gap:6px;margin-top:8px}.details{flex:1;border:1px solid #a8d9b8;background:#f0fbf2;color:var(--green);border-radius:10px;padding:8px 4px;font-size:10px;font-weight:900}.addbtn{width:76px;border:1px solid #8ed0a2;background:#e7f8e9;color:var(--green);border-radius:10px;font-size:11px;font-weight:950}.addbtn.added{background:var(--green);color:#fff}
+.bannerrow{display:grid;grid-template-columns:1fr 1fr;gap:9px}.offer{border-radius:17px;padding:13px;min-height:112px;box-shadow:var(--shadow);border:1px solid #fff}.offer b{display:block;font-size:17px;margin-bottom:5px}.offer span{font-size:10px;line-height:14px}.offer button{margin-top:9px;border:0;border-radius:8px;background:#fff;padding:6px 9px;font-size:9px;font-weight:900;color:var(--green)}.offer.a{background:#e8f7e9}.offer.b{background:#fff2cf}
+.strip{display:flex;gap:8px;overflow:auto;scrollbar-width:none}.strip::-webkit-scrollbar{display:none}.mini{min-width:130px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px}.mini .micon{height:70px;border-radius:11px;background:#f4f6f4;display:flex;align-items:center;justify-content:center;font-size:42px}.mini b{display:block;font-size:10px;margin-top:7px;line-height:14px}.mini strong{font-size:13px;color:var(--green)}
+.bottom{position:fixed;z-index:50;bottom:0;left:0;right:0;height:74px;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-top:1px solid var(--line);display:flex;justify-content:space-around;align-items:center;padding-bottom:env(safe-area-inset-bottom)}.nav{position:relative;text-align:center;color:#69736d;font-size:9px;font-weight:700;min-width:54px}.nav i{display:block;font-style:normal;font-size:23px;line-height:25px}.nav.active{color:var(--green)}.badge{position:absolute;top:-3px;margin-left:-7px;background:var(--red);color:#fff;border-radius:10px;padding:2px 5px;font-size:8px}
+.overlay{display:none;position:fixed;inset:0;background:rgba(10,18,13,.55);z-index:80}.sheet{position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:24px 24px 0 0;max-height:88vh;overflow:auto;padding:18px 15px 25px}.sheethead{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.sheethead h2{font-size:20px}.close{border:0;background:#f0f2f0;width:35px;height:35px;border-radius:50%}.detail{display:grid;grid-template-columns:120px 1fr;gap:14px}.detailpic{height:150px;border-radius:16px;background:#f4f6f4;display:flex;align-items:center;justify-content:center;font-size:75px}.detail h2{font-size:18px;line-height:23px}.stars{color:#f2a500;font-size:12px;margin:6px 0}.muted{color:var(--muted);font-size:11px;line-height:17px}.qtyrow{display:flex;justify-content:space-between;align-items:center;background:#f5f7f5;border-radius:13px;padding:11px;margin-top:13px}.qty{display:flex;align-items:center;gap:12px}.qty button{width:31px;height:31px;border:0;border-radius:9px;background:#e4f6e7;color:var(--green);font-weight:900;font-size:18px}.bigadd,.checkout{width:100%;border:0;background:var(--green);color:#fff;border-radius:13px;padding:13px;font-weight:900;margin-top:12px}.cartrow{display:flex;align-items:center;gap:9px;padding:11px 0;border-bottom:1px solid #edf0ed}.cartpic{width:55px;height:55px;border-radius:12px;background:#f4f6f4;display:flex;align-items:center;justify-content:center;font-size:29px}.cartinfo{flex:1}.cartinfo b{display:block;font-size:11px;line-height:15px}.cartinfo span{font-size:12px;font-weight:900}.total{background:#f5f7f5;border-radius:14px;padding:13px;margin-top:12px}.line{display:flex;justify-content:space-between;font-size:12px;margin:6px 0}.grand{font-size:17px;font-weight:950;border-top:1px solid #dfe5e0;padding-top:9px;margin-top:9px}.empty{text-align:center;padding:40px 10px;color:var(--muted)}.empty div{font-size:48px;margin-bottom:8px}.form input{width:100%;padding:12px;border:1px solid #dce5de;border-radius:11px;margin:5px 0;outline:0}.form button{width:100%;padding:12px;border:0;border-radius:11px;background:var(--green);color:#fff;font-weight:900;margin-top:6px}.address{border:1px solid var(--line);border-radius:14px;padding:12px;margin:8px 0}.address.selected{border:2px solid var(--green)}.address small{color:var(--muted);line-height:17px}.address button{border:0;border-radius:9px;padding:8px;margin-top:8px;background:#e8f7ea;color:var(--green);font-size:10px;font-weight:900}.gps{width:100%;padding:12px;border:1px solid #bdd5ef;background:#eef6ff;color:#2364a3;border-radius:11px;font-weight:900;margin-top:8px}
+.toast{display:none;position:fixed;z-index:100;left:50%;bottom:91px;transform:translateX(-50%);background:#18211c;color:#fff;padding:11px 16px;border-radius:999px;font-size:11px;white-space:nowrap}
+@media(min-width:600px){.products{grid-template-columns:repeat(4,1fr)}.card .pic{height:150px}.wrap{padding:0 10px}.header{border-radius:0 0 28px 28px}}
+
+.pic img,.micon img,.detailpic img,.cartpic img{width:100%;height:100%;object-fit:contain;display:block;padding:10px;border-radius:inherit}.micon img{padding:7px}.detailpic img{padding:12px}.cartpic img{padding:5px}.pic span,.micon span,.detailpic span,.cartpic span{font-size:inherit}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="header">
+  <div class="top">
+    <div class="brand">Quick <span>Bazaar</span></div>
+    <div class="topright">
+      <button class="loc" onclick="openAddress()"><span class="locpin">📍</span><span class="loctxt"><small>Deliver to</small><b id="headAddress">Juria Bazar, Assam</b></span><span class="chev">›</span></button>
+      <button class="profile" onclick="openProfile()">👤</button>
+    </div>
+  </div>
+  <label class="search"><span>⌕</span><input id="search" placeholder="Search groceries, brands & more"></label>
+  <div class="quick"><button onclick="filterCategory('grocery')">🛒 Groceries</button><button onclick="filterCategory('fresh')">🥬 Fresh</button><button onclick="filterCategory('beauty')">✨ Beauty</button><button onclick="filterCategory('home')">🏠 Home</button><button onclick="filterCategory('electronics')">📱 Electronics</button></div>
+</header>
+
+<div class="cats">
+  <button class="cat" onclick="filterCategory('all')"><div class="caticon">🛒</div>All</button>
+  <button class="cat" onclick="filterCategory('fresh')"><div class="caticon">🥬</div>Fresh</button>
+  <button class="cat" onclick="filterCategory('beauty')"><div class="caticon">🧴</div>Beauty</button>
+  <button class="cat" onclick="filterCategory('home')"><div class="caticon">🛋️</div>Home</button>
+  <button class="cat" onclick="filterCategory('electronics')"><div class="caticon">📱</div>Electronics</button>
+  <button class="cat" onclick="filterCategory('gifting')"><div class="caticon">🎁</div>Gifting</button>
+  <button class="cat" onclick="filterCategory('clothes')"><div class="caticon">👕</div>Fashion</button>
+</div>
+
+<section class="hero"><img src="hero-banner.jpg" alt="Quick Bazaar"></section>
+<div class="service"><div><b>⚡</b>Fast local delivery</div><div><b>✓</b>Original products</div><div><b>₹</b>Best local prices</div></div><div style="padding:5px 12px 0;color:#69736d;font-size:9px;text-align:center">Demo catalogue • Prices can vary by location and offers</div>
+
+<section class="section">
+ <div class="head"><h2>🔥 Best Sellers</h2><span class="see">See all ›</span></div>
+ <div class="products" id="productList"></div>
+</section>
+
+<section class="section">
+ <div class="head"><h2>🏷️ Deals for you</h2><span class="see">View all ›</span></div>
+ <div class="bannerrow"><div class="offer a"><b>Up to 50% OFF</b><span>Everyday groceries & essentials</span><br><button onclick="filterCategory('grocery')">Shop now ›</button></div><div class="offer b"><b>Fresh at better prices</b><span>Fruits, vegetables & dairy</span><br><button onclick="filterCategory('fresh')">Explore ›</button></div></div>
+</section>
+
+<section class="section">
+ <div class="head"><h2>⚡ Trending now</h2><span class="see">See all ›</span></div>
+ <div class="strip" id="trending"></div>
+</section>
+
+<section class="section">
+ <div class="head"><h2>👕 Fashion picks</h2><span class="see">See all ›</span></div>
+ <div class="strip" id="fashion"></div>
+</section>
+</div>
+
+<nav class="bottom">
+ <div class="nav active" onclick="goHome()"><i>⌂</i>Home</div>
+ <div class="nav" onclick="openCategories()"><i>▦</i>Categories</div>
+ <div class="nav" onclick="openWishlist()"><i>♡<span id="wishBadge" class="badge" style="display:none">0</span></i>Wishlist</div>
+ <div class="nav" onclick="openOrders()"><i>▣</i>Orders</div>
+ <div class="nav" onclick="openCart()"><i>🛒<span id="cartBadge" class="badge" style="display:none">0</span></i>Cart</div>
+</nav>
+<div class="toast" id="toast"></div>
+<div class="overlay" id="overlay"><div class="sheet" id="sheet"></div></div>
+
+<script>
+const products=[
+{id:1,name:'Aashirvaad Atta 5kg',price:248,old:314,discount:'21% OFF',cat:'grocery',emoji:'🌾',unit:'5 kg',img:'https://myras.com.sg/cdn/shop/products/AASHIRVAAD_Whole_Wheat_Atta_5kg.jpg?v=1622791667'},
+{id:2,name:'India Gate Basmati Rice 5kg',price:1037,old:1085,discount:'4% OFF',cat:'grocery',emoji:'🍚',unit:'5 kg',img:'https://dalchinii.ch/cdn/shop/products/IndiaGateClassicBasmatiRice5Kg.png?v=1751530967&width=600'},
+{id:3,name:'Fortune Sunlite Sunflower Oil 1L',price:180,old:190,discount:'5% OFF',cat:'grocery',emoji:'🫗',unit:'1 L',img:'https://image.cdn.shpy.in/278008/SKU-0935_0-1745058569487.jpg?format=webp'},
+{id:4,name:'Maggi 2-Minute Masala Noodles',price:88,old:100,discount:'12% OFF',cat:'grocery',emoji:'🍜',unit:'4 × 70 g',img:'https://instamart-media-assets.swiggy.com/swiggy/image/upload/fl_lossy%2Cf_auto%2Cq_auto%2Ch_544%2Cw_504/NI_CATALOG/IMAGES/CIW/2026/5/20/858963fa-8fad-40a4-807d-834ff53752f7_81_1.png'},
+{id:5,name:'Tata Salt 1kg',price:29,old:32,discount:'9% OFF',cat:'grocery',emoji:'🧂',unit:'1 kg',img:'https://www.silkrute.co.uk/images/detailed/4190/61-zRoFrfqL.jpg'},
+{id:6,name:'Amul Taaza Milk 1L',price:57,old:57,discount:'MRP',cat:'fresh',emoji:'🥛',unit:'1 L',img:'https://www.bbassets.com/media/uploads/p/xl/40114416_8-amul-taaza-milk.jpg'},
+{id:7,name:'Surf Excel Matic Front Load 2kg',price:348,old:415,discount:'16% OFF',cat:'home',emoji:'🧺',unit:'2 kg',img:'https://instamart-media-assets.swiggy.com/swiggy/image/upload/fl_lossy%2Cf_auto%2Cq_auto/NI_CATALOG/IMAGES/ciw/2025/12/18/2565482d-a962-426d-ade0-c3db77568ce6_LT81G7136B_MN_18122025.png'},
+{id:8,name:'Fresh Banana 1kg',price:50,old:60,discount:'17% OFF',cat:'fresh',emoji:'🍌',unit:'1 kg'},
+{id:9,name:'Fresh Tomato 1kg',price:40,old:50,discount:'20% OFF',cat:'fresh',emoji:'🍅',unit:'1 kg'},
+{id:10,name:'Face Wash',price:149,old:180,discount:'17% OFF',cat:'beauty',emoji:'🧴',unit:'100 ml'},
+{id:11,name:'Storage Box',price:249,old:299,discount:'17% OFF',cat:'home',emoji:'📦',unit:'1 pc'},
+{id:12,name:'Wireless Earbuds',price:1299,old:1799,discount:'28% OFF',cat:'electronics',emoji:'🎧',unit:'1 pc'},
+{id:13,name:'Gift Hamper',price:499,old:699,discount:'29% OFF',cat:'gifting',emoji:'🎁',unit:'1 pc'},
+{id:14,name:"Men's T-Shirt",price:299,old:499,discount:'40% OFF',cat:'clothes',emoji:'👕',unit:'1 pc'}];
+
+let cart=JSON.parse(localStorage.getItem('qb_cart')||'{}');
+let wishlist=JSON.parse(localStorage.getItem('qb_wishlist')||'[]');
+let detailQty=1;
+
+const money=n=>'₹'+n.toLocaleString('en-IN');
+const getUser=()=>JSON.parse(localStorage.getItem('qb_user')||'null');
+const getAddresses=()=>JSON.parse(localStorage.getItem('qb_addresses')||'[]');
+const setAddresses=a=>localStorage.setItem('qb_addresses',JSON.stringify(a));
+const selectedAddress=()=>{let a=getAddresses();return a.find(x=>x.id==localStorage.getItem('qb_selected_address'))||a[0]||null};
+function toast(m){let t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(window.tm);window.tm=setTimeout(()=>t.style.display='none',1900)}
+function save(){localStorage.setItem('qb_cart',JSON.stringify(cart));localStorage.setItem('qb_wishlist',JSON.stringify(wishlist));badges()}
+function badges(){let n=Object.values(cart).reduce((a,b)=>a+b,0),c=document.getElementById('cartBadge'),w=document.getElementById('wishBadge');c.textContent=n;c.style.display=n?'inline-block':'none';w.textContent=wishlist.length;w.style.display=wishlist.length?'inline-block':'none'}
+function cartItems(){return Object.entries(cart).filter(([id,q])=>q>0).map(([id,q])=>({p:products.find(x=>x.id==id),q:+q})).filter(x=>x.p)}
+function total(){return cartItems().reduce((s,x)=>s+x.p.price*x.q,0)}
+function card(p){let liked=wishlist.includes(p.id),added=!!cart[p.id];return `<article class="card" onclick="openProduct(${p.id})"><span class="discount">${p.discount}</span><button class="heart ${liked?'on':''}" onclick="event.stopPropagation();toggleWish(${p.id})">${liked?'♥':'♡'}</button><div class="pic">${p.img?`<img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.style.display='none';this.parentElement.insertAdjacentHTML('beforeend','<span>${p.emoji}</span>')">`:p.emoji}</div><h3>${p.name}</h3><div><span class="price">${money(p.price)}</span><span class="old">${money(p.old)}</span><span class="unit">• ${p.unit}</span></div><div class="addrow"><button class="details" onclick="event.stopPropagation();openProduct(${p.id})">View details</button><button class="addbtn ${added?'added':''}" onclick="event.stopPropagation();add(${p.id})">${added?'✓ Added':'＋ Add'}</button></div></article>`}
+function mini(p){return `<div class="mini" onclick="openProduct(${p.id})"><div class="micon">${p.img?`<img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.style.display='none';this.parentElement.insertAdjacentHTML('beforeend','<span>${p.emoji}</span>')">`:p.emoji}</div><b>${p.name}</b><strong>${money(p.price)}</strong></div>`}
+function render(list=products){document.getElementById('productList').innerHTML=list.slice(0,8).map(card).join('');document.getElementById('trending').innerHTML=products.filter(p=>['fresh','grocery'].includes(p.cat)).slice(0,8).map(mini).join('');document.getElementById('fashion').innerHTML=products.filter(p=>p.cat==='clothes').slice(0,8).map(mini).join('')}
+function filterCategory(cat){document.getElementById('search').value='';let l=cat==='all'?products:products.filter(p=>p.cat===cat);render(l);document.getElementById('productList').scrollIntoView({behavior:'smooth',block:'start'});toast(cat==='all'?'All products':cat[0].toUpperCase()+cat.slice(1))}
+document.getElementById('search').addEventListener('input',e=>{let q=e.target.value.toLowerCase();render(products.filter(p=>p.name.toLowerCase().includes(q)))})
+function add(id,n=1){cart[id]=(cart[id]||0)+n;if(cart[id]<=0)delete cart[id];save();render();toast('Added to cart ✓')}
+function toggleWish(id){wishlist.includes(id)?(wishlist=wishlist.filter(x=>x!==id),toast('Removed from wishlist')):(wishlist.push(id),toast('Added to wishlist ♥'));save();render()}
+function openProduct(id){let p=products.find(x=>x.id===id);detailQty=1;document.getElementById('sheet').innerHTML=`<div class="sheethead"><h2>Product details</h2><button class="close" onclick="closeSheet()">✕</button></div><div class="detail"><div class="detailpic">${p.img?`<img src="${p.img}" alt="${p.name}" onerror="this.style.display='none';this.parentElement.insertAdjacentHTML('beforeend','<span>${p.emoji}</span>')">`:p.emoji}</div><div><h2>${p.name}</h2><div class="stars">★★★★★ <span class="muted">4.7</span></div><p class="muted">Quality product • Easy ordering • Fast local delivery</p><div style="margin-top:8px"><b style="font-size:18px">${money(p.price)}</b> <span class="old">${money(p.old)}</span></div></div></div><div class="qtyrow"><b>Quantity</b><div class="qty"><button onclick="setQty(-1)">−</button><b id="dq">1</b><button onclick="setQty(1)">+</button></div></div><button class="bigadd" onclick="add(${p.id},detailQty);closeSheet()">🛒 Add ${detailQty} to cart</button>`;openOverlay()}
+function setQty(n){detailQty=Math.max(1,detailQty+n);document.getElementById('dq').textContent=detailQty}
+function openCart(){let it=cartItems(),saveAmt=it.reduce((s,x)=>s+(x.p.old-x.p.price)*x.q,0);document.getElementById('sheet').innerHTML=`<div class="sheethead"><h2>🛒 Your cart</h2><button class="close" onclick="closeSheet()">✕</button></div>${it.length?it.map(x=>`<div class="cartrow"><div class="cartpic">${x.p.img?`<img src="${x.p.img}" alt="${x.p.name}" loading="lazy" onerror="this.style.display='none';this.parentElement.insertAdjacentHTML('beforeend','<span>${x.p.emoji}</span>')">`:x.p.emoji}</div><div class="cartinfo"><b>${x.p.name}</b><span>${money(x.p.price)}</span></div><div class="qty"><button onclick="add(${x.p.id},-1);openCart()">−</button><b>${x.q}</b><button onclick="add(${x.p.id},1);openCart()">+</button></div></div>`).join('')+`<div class="total"><div class="line"><span>Items</span><b>${it.reduce((a,x)=>a+x.q,0)}</b></div><div class="line"><span>Subtotal</span><b>${money(total())}</b></div><div class="line"><span>Delivery</span><b>FREE</b></div><div class="line"><span>You save</span><b style="color:var(--green)">${money(saveAmt)}</b></div><div class="line grand"><span>Total</span><b>${money(total())}</b></div></div><button class="checkout" onclick="checkout()">Proceed to checkout</button>`:`<div class="empty"><div>🛒</div><h3>Your cart is empty</h3><p>Add products to continue.</p></div>`};openOverlay()}
+function openWishlist(){let it=products.filter(p=>wishlist.includes(p.id));document.getElementById('sheet').innerHTML=`<div class="sheethead"><h2>❤️ Wishlist</h2><button class="close" onclick="closeSheet()">✕</button></div>${it.length?it.map(p=>`<div class="cartrow"><div class="cartpic">${p.emoji}</div><div class="cartinfo"><b>${p.name}</b><span>${money(p.price)}</span></div><button class="details" style="max-width:80px" onclick="add(${p.id})">Add</button></div>`).join(''):`<div class="empty"><div>♡</div><h3>Wishlist is empty</h3></div>`};openOverlay()}
+function openCategories(){document.getElementById('sheet').innerHTML=`<div class="sheethead"><h2>▦ Categories</h2><button class="close" onclick="closeSheet()">✕</button></div><div class="products">${[['fresh','🥬','Fresh'],['grocery','🛒','Groceries'],['beauty','🧴','Beauty'],['home','🛋️','Home'],['electronics','📱','Electronics'],['gifting','🎁','Gifting'],['clothes','👕','Fashion']].map(x=>`<button class="details" style="padding:22px 5px;font-size:13px" onclick="filterCategory('${x[0]}');closeSheet()">${x[1]}<br><br>${x[2]}</button>`).join('')}</div>`;openOverlay()}
+function openOrders(){let o=JSON.parse(localStorage.getItem('qb_orders')||'[]');document.getElementById('sheet').innerHTML=`<div class="sheethead"><h2>📦 My orders</h2><button class="close" onclick="closeSheet()">✕</button></div>${o.length?o.map(x=>`<div class="address"><b>Order #${x.id}</b><br><small>${x.items}<br><b style="color:var(--green)">${x.status}</b></small></div>`).join(''):`<div class="empty"><div>📦</div><h3>No orders yet</h3></div>`}`;openOverlay()}
+function openProfile(){let u=getUser();document.getElementById('sheet').innerHTML=u?`<div class="sheethead"><h2>👤 My profile</h2><button class="close" onclick="closeSheet()">✕</button></div><div class="address" style="background:linear-gradient(135deg,#08763a,#16a34a);color:#fff;border:0"><b style="font-size:17px">${u.name}</b><br><small style="color:#fff">${u.phone}</small></div><button class="details" style="width:100%;padding:12px" onclick="openAddress()">📍 My addresses</button>`:`<div class="sheethead"><h2>👤 Login</h2><button class="close" onclick="closeSheet()">✕</button></div><div class="form"><input id="ln" placeholder="Your name"><input id="lp" placeholder="Mobile number" inputmode="tel"><button onclick="login()">Continue</button></div>`;openOverlay()}
+function login(){let n=document.getElementById('ln').value.trim(),p=document.getElementById('lp').value.trim();if(n.length<2||p.replace(/\D/g,'').length<10)return toast('Enter valid details');localStorage.setItem('qb_user',JSON.stringify({name:n,phone:p}));closeSheet();toast('Login successful ✓')}
+function openAddress(){let a=getAddresses(),s=localStorage.getItem('qb_selected_address');document.getElementById('sheet').innerHTML=`<div class="sheethead"><div><h2>📍 Delivery address</h2><small class="muted">Choose where your order should arrive</small></div><button class="close" onclick="closeSheet()">✕</button></div>${a.map(x=>`<div class="address ${x.id==s?'selected':''}"><b>${x.label||'Home'} ${x.id==s?'✓':''}</b><br><small>${x.text.replace(/\n/g,'<br>')}</small><br><button onclick="selectAddress('${x.id}')">Use this address</button></div>`).join('')}<button class="gps" onclick="useCurrentLocation()">◎ Use my current location</button><button class="details" style="width:100%;margin-top:8px;padding:12px" onclick="openAddAddress()">＋ Add new address</button>`;openOverlay()}
+function openAddAddress(){document.getElementById('sheet').innerHTML=`<div class="sheethead"><h2>＋ Add address</h2><button class="close" onclick="openAddress()">✕</button></div><div class="form"><input id="an" placeholder="Full name"><input id="ap" placeholder="Mobile number"><input id="al" placeholder="House / Street / Area"><input id="ac" placeholder="City / Town"><input id="as" value="Assam"><input id="az" placeholder="PIN code"><button onclick="saveAddress()">Save address</button></div>`}
+function saveAddress(){let n=an.value.trim(),p=ap.value.trim(),l=al.value.trim(),c=ac.value.trim(),s=as.value.trim(),z=az.value.trim();if(!n||p.replace(/\D/g,'').length<10||!l||!c||z.length<5)return toast('Please fill all details');let id=String(Date.now()),a=getAddresses();a.push({id,label:'Home',text:`${n}, ${p}\n${l}, ${c}, ${s} - ${z}`});setAddresses(a);localStorage.setItem('qb_selected_address',id);updateHeader();openAddress();toast('Address saved ✓')}
+function selectAddress(id){localStorage.setItem('qb_selected_address',id);updateHeader();openAddress();toast('Address selected ✓')}
+function updateHeader(){let a=selectedAddress();document.getElementById('headAddress').textContent=a?(a.text.split(',')[1]||a.text.split(',')[0]).trim().slice(0,22):'Juria Bazar, Assam'}
+async function useCurrentLocation(){if(!navigator.geolocation)return toast('Location not supported');toast('Getting your live location…');navigator.geolocation.getCurrentPosition(async p=>{let lat=p.coords.latitude,lng=p.coords.longitude;localStorage.setItem('qb_gps',JSON.stringify({lat,lng,updatedAt:Date.now()}));try{let r=await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`);let d=await r.json();let area=d.locality||d.city||d.principalSubdivision||'Current location',city=d.city&&d.city!==area?d.city:'',state=d.principalSubdivision||'Assam',pin=d.postcode||'';let text=[area,city,state,pin].filter(Boolean).join(', '),a=getAddresses().filter(x=>x.id!=='gps');a.unshift({id:'gps',label:'Current Location',text});setAddresses(a);localStorage.setItem('qb_selected_address','gps');updateHeader();openAddress();toast('Live location updated ✓')}catch(e){toast('GPS found, address lookup failed')}} ,()=>toast('Please allow location permission'),{enableHighAccuracy:true,timeout:15000,maximumAge:0})}
+function checkout(){if(!getUser()){openProfile();return toast('Please login first')}if(!selectedAddress()){openAddAddress();return toast('Add delivery address first')}document.getElementById('sheet').innerHTML=`<div class="sheethead"><h2>Checkout</h2><button class="close" onclick="closeSheet()">✕</button></div><div class="address"><b>📍 Delivery address</b><br><small>${selectedAddress().text.replace(/\n/g,'<br>')}</small></div><div class="total"><div class="line"><span>Subtotal</span><b>${money(total())}</b></div><div class="line"><span>Delivery</span><b>FREE</b></div><div class="line grand"><span>Total</span><b>${money(total())}</b></div></div><button class="checkout" onclick="placeOrder()">Place order • COD</button>`}
+function placeOrder(){let it=cartItems();if(!it.length)return;let o=JSON.parse(localStorage.getItem('qb_orders')||'[]');o.unshift({id:String(Date.now()).slice(-6),total:total(),items:it.map(x=>x.p.name+' × '+x.q).join(' • '),status:'Order placed • Cash on Delivery'});localStorage.setItem('qb_orders',JSON.stringify(o));cart={};save();render();closeSheet();toast('Order placed successfully ✓')}
+function openOverlay(){document.getElementById('overlay').style.display='block'}
+function closeSheet(){document.getElementById('overlay').style.display='none'}
+document.getElementById('overlay').addEventListener('click',e=>{if(e.target.id==='overlay')closeSheet()})
+function goHome(){scrollTo({top:0,behavior:'smooth'})}
+updateHeader();render();badges();
+</script>
+</body>
+</html>
