@@ -207,8 +207,50 @@ function checkout(){
  }
  let total=Object.values(cart).reduce((s,x)=>{let p=P.find(y=>y.id==x.id);return s+p.price*x.q},0);$('sheet').innerHTML=`<div class="sheethead"><h2>💳 Checkout</h2><button class="close" onclick="closeSheet()">✕</button></div><div class="address"><b>📍 Deliver to</b><p>${selected().text}</p></div><div style="font-size:10px;color:var(--muted);margin:8px 2px">🚚 Delivery area: within 5 km of Quick Bazaar dark store</div><div class="form"><b>Payment Method</b><label class="pay"><input type="radio" name="pay" checked value="COD"> 💵 Cash on Delivery</label><label class="pay"><input type="radio" name="pay" value="ONLINE"> 💳 Online payment</label></div><div class="total"><div class="line"><span>Total</span><b>${money(total)}</b></div></div><button class="primary" onclick="placeOrder()">Place Order</button>`}
 function placeOrder(){let items=Object.values(cart).map(x=>{let p=P.find(y=>y.id==x.id);return p.name+' × '+x.q}).join(' • '),total=Object.values(cart).reduce((s,x)=>s+P.find(y=>y.id==x.id).price*x.q,0);let o=JSON.parse(localStorage.getItem('qb_orders')||'[]');o.unshift({id:String(Date.now()).slice(-6),items,total,status:document.querySelector('input[name=pay]:checked').value==='COD'?'Order placed • COD':'Order placed • Online payment'});localStorage.setItem('qb_orders',JSON.stringify(o));cart={};save();render(current);closeSheet();toast('Order placed ✓')}
+async function loadLiveProducts(){
+ const url='https://iyymngisowylexljykpo.supabase.co';
+ const key='sb_publishable_M2Yvf-qj8aPmTrMQ1KXsdg_2KI8RYNy';
 
+ try{
+  const res=await fetch(
+   url+'/rest/v1/products?select=*&is_active=eq.true',
+   {
+    headers:{
+     apikey:key,
+     Authorization:'Bearer '+key
+    }
+   }
+  );
+
+  if(!res.ok){
+   throw new Error('Supabase error: '+res.status);
+  }
+
+  const rows=await res.json();
+
+  if(!Array.isArray(rows)||rows.length===0){
+   return;
+  }
+
+  const live=rows.map((p,i)=>({
+   id:p.id??('live-'+i),
+   name:p.name||'Product',
+   price:Number(p.price||0),
+   old:Number(p.old_price||p.mrp||p.price||0),
+   cat:String(p.category||'grocery').toLowerCase(),
+   emoji:'🛒',
+   img:p.image_url||''
+  }));
+
+  P.splice(0,P.length,...live);
+  current=P;
+  render(P);
+
+ }catch(e){
+  console.error('Supabase product sync failed:',e);
+ }
+}
 updateHeader();render();
-</script>
+loadLiveProducts();</script>
 </body>
 </html>
