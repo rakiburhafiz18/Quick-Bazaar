@@ -252,5 +252,125 @@ async function loadLiveProducts(){
 }
 updateHeader();render();
 loadLiveProducts();</script>
+
+<style>
+#qb-customer-care {
+  position: fixed;
+  right: 14px;
+  bottom: 85px;
+  z-index: 99999;
+  font-family: Arial, sans-serif;
+}
+#qb-care-toggle {
+  background: #16803d;
+  color: white;
+  border: 0;
+  border-radius: 30px;
+  padding: 13px 18px;
+  font-weight: bold;
+  font-size: 15px;
+  box-shadow: 0 4px 12px #0003;
+  cursor: pointer;
+}
+#qb-care-panel {
+  display: none;
+  position: absolute;
+  right: 0;
+  bottom: 58px;
+  width: min(300px, calc(100vw - 28px));
+  background: white;
+  color: #222;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 5px 25px #0003;
+}
+#qb-care-panel.qb-open { display: block; }
+#qb-care-head {
+  background: #16803d;
+  color: white;
+  padding: 14px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+}
+#qb-care-close {
+  background: none;
+  border: 0;
+  color: white;
+  font-size: 22px;
+}
+.qb-care-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px;
+  text-decoration: none;
+  color: #222;
+  border-bottom: 1px solid #eee;
+}
+.qb-care-icon { font-size: 23px; }
+.qb-care-small {
+  display: block;
+  color: #666;
+  font-size: 12px;
+  margin-top: 4px;
+}
+</style>
+
+<div id="qb-customer-care">
+  <button id="qb-care-toggle" type="button">
+    💬 Customer Care
+  </button>
+
+  <div id="qb-care-panel">
+    <div id="qb-care-head">
+      <span>Quick Bazaar Support</span>
+      <button id="qb-care-close" type="button">×</button>
+    </div>
+
+    <a class="qb-care-link" href="tel:+919864813798">
+      <span class="qb-care-icon">📞</span>
+      <span>
+        <b>Call Customer Care</b>
+        <small class="qb-care-small">9864813798</small>
+      </span>
+    </a>
+
+    <a class="qb-care-link"
+       href="https://wa.me/919864813798?text=Hello%20Quick%20Bazaar%20Support"
+       target="_blank" rel="noopener">
+      <span class="qb-care-icon">🟢</span>
+      <span>
+        <b>WhatsApp</b>
+        <small class="qb-care-small">Chat with us</small>
+      </span>
+    </a>
+
+    <a class="qb-care-link"
+       href="mailto:officialquickbazaar@gmail.com?subject=Quick%20Bazaar%20Support">
+      <span class="qb-care-icon">✉️</span>
+      <span>
+        <b>Gmail Support</b>
+        <small class="qb-care-small">officialquickbazaar@gmail.com</small>
+      </span>
+    </a>
+  </div>
+</div>
+
+<script>
+(function () {
+  const panel = document.getElementById('qb-care-panel');
+
+  document.getElementById('qb-care-toggle')
+    .addEventListener('click', function () {
+      panel.classList.toggle('qb-open');
+    });
+
+  document.getElementById('qb-care-close')
+    .addEventListener('click', function () {
+      panel.classList.remove('qb-open');
+    });
+})();
+</script>
 </body>
 </html>
