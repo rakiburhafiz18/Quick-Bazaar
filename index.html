@@ -175,7 +175,70 @@ function selectAddress(id){
  localStorage.setItem('qb_selected_address',id);updateHeader();openAddress();toast('Address selected ✓')
 }
 function addAddressForm(){$('sheet').innerHTML=`<div class="sheethead"><h2>＋ Add Address</h2><button class="close" onclick="openAddress()">✕</button></div><div class="form"><input id="aname" placeholder="Full name"><input id="aphone" placeholder="Mobile number"><textarea id="aline" placeholder="House / street / area"></textarea><input id="acity" placeholder="City / town"><input id="apin" placeholder="PIN code" inputmode="numeric"><button class="primary" onclick="saveAddress()">Save Address</button></div>`}
-async function saveAddress(){let n=$('aname').value.trim(),ph=$('aphone').value.trim(),l=$('aline').value.trim(),c=$('acity').value.trim(),pin=$('apin').value.trim();if(!n||ph.replace(/\D/g,'').length!==10||!l||!c||pin.length<5)return toast('Fill all address details');let id=String(Date.now());let a=addresses();a.push({id,label:'Home',text:`${n}, ${ph}\n${l}, ${c}, Assam - ${pin}`,short:`${c}, Assam`});setAddresses(a);localStorage.setItem('qb_selected_address',id);updateHeader();openAddress();toast('Address saved ✓')}
+
+async function saveAddress(){
+ const n=$('aname').value.trim();
+ const ph=$('aphone').value.trim();
+ const l=$('aline').value.trim();
+ const c=$('acity').value.trim();
+ const pin=$('apin').value.trim();
+
+ if(!n||ph.replace(/\D/g,'').length!==10||!l||!c||pin.length<5){
+  return toast('Fill all address details');
+ }
+
+ toast('Checking address location...');
+
+ try{
+  const query=encodeURIComponent(`${l}, ${c}, Assam ${pin}, India`);
+  const res=await fetch(
+   `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q=${query}`
+  );
+
+  if(!res.ok) throw new Error('Location lookup failed');
+
+  const results=await res.json();
+
+  if(!Array.isArray(results)||!results.length){
+   return toast('Location not found. Check address and PIN code.');
+  }
+
+  const lat=Number(results[0].lat);
+  const lng=Number(results[0].lon);
+
+  if(!Number.isFinite(lat)||!Number.isFinite(lng)){
+   return toast('Could not verify address. Please retry.');
+  }
+
+  const id=String(Date.now());
+  const a=addresses();
+
+  a.push({
+   id,
+   label:'Home',
+   text:`${n}, ${ph}\n${l}, ${c}, Assam - ${pin}`,
+   short:`${c}, Assam`,
+   lat,
+   lng
+  });
+
+  setAddresses(a);
+  localStorage.setItem('qb_selected_address',id);
+  updateHeader();
+  openAddress();
+
+  const ds=deliveryStatus(a[a.length-1]);
+
+  if(ds.ok){
+   toast('Address saved ✓ Delivery available');
+  }else{
+   toast('Address saved. Estimated location is outside 5 km; verify location.');
+  }
+ }catch(e){
+  toast('Address location could not be checked. Check internet and retry.');
+ }
+}
+
 
 function useGPS(){
  if(!navigator.geolocation)return toast('Location is not supported');
