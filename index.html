@@ -101,33 +101,6 @@ function deliveryStatus(a){
  return {ok:km<=DELIVERY_RADIUS_KM,km};
 }
 
-const P=[
-[1,'Aashirvaad Atta 5kg',260,300,'grocery','🌾','https://myras.com.sg/cdn/shop/products/AASHIRVAAD_Whole_Wheat_Atta_5kg.jpg?v=1622791667'],
-[2,'India Gate Rice 5kg',420,480,'grocery','🍚','https://dalchinii.ch/cdn/shop/products/IndiaGateClassicBasmatiRice5Kg.png?v=1751530967&width=600'],
-[3,'Fortune Sunflower Oil 1L',140,165,'grocery','🫗','https://image.cdn.shpy.in/278008/SKU-0935_0-1745058569487.jpg?format=webp'],
-[4,'Maggi Noodles Pack',90,100,'grocery','🍜','https://instamart-media-assets.swiggy.com/swiggy/image/upload/fl_lossy%2Cf_auto%2Cq_auto%2Ch_544%2Cw_504/NI_CATALOG/IMAGES/CIW/2026/5/20/858963fa-8fad-40a4-807d-834ff53752f7_81_1.png'],
-[5,'Fresh Banana 1kg',50,60,'fresh','🍌','https://www.bigbasket.com/media/uploads/p/l/10000025_27-fresho-banana-robusta.jpg'],
-[6,'Fresh Tomato 1kg',40,50,'fresh','🍅','https://www.bigbasket.com/media/uploads/p/l/10000150_18-fresho-tomato-local.jpg'],
-[7,'Fresh Potato 1kg',35,42,'fresh','🥔','https://www.bigbasket.com/media/uploads/p/l/10000159_17-fresho-potato.jpg'],
-[8,'Fresh Onion 1kg',45,52,'fresh','🧅','https://www.bigbasket.com/media/uploads/p/l/10000148_15-fresho-onion.jpg'],
-[9,'Face Wash',149,180,'beauty','🧴','https://www.bigbasket.com/media/uploads/p/l/40112980_2-himalaya-purifying-neem-face-wash.jpg'],
-[10,'Body Lotion',199,240,'beauty','🧼','https://www.bigbasket.com/media/uploads/p/l/40125638_2-vaseline-intensive-care-deep-restore-body-lotion.jpg'],
-[11,'Storage Box',249,299,'home','📦',''],
-[12,'Kitchen Organizer',299,349,'home','🧺',''],
-[13,'Smartphone',8999,9999,'electronics','📱',''],
-[14,'Wireless Earbuds',1299,1799,'electronics','🎧',''],
-[15,'Power Bank',899,1199,'electronics','🔋',''],
-[16,'Gift Hamper',499,699,'gifting','🎁',''],
-[17,'Teddy Gift',399,599,'gifting','🧸',''],
-[18,"Men's T-Shirt",299,499,'clothes','👕',''],
-[19,"Women's Kurti",399,799,'clothes','👗',''],
-[20,"Men's Jeans",699,1299,'clothes','👖',''],
-[21,"Women's Top",299,499,'clothes','👚',''],
-[22,'Kids Wear Set',349,699,'clothes','🧒',''],
-[23,'Kids Dress',399,729,'clothes','👗',''],
-[24,'Amul Taaza Milk 1L',58,60,'fresh','🥛','https://www.bbassets.com/media/uploads/p/xl/40114416_8-amul-taaza-milk.jpg'],
-[25,'Eggs 30 Pcs',180,210,'fresh','🥚','']
-].map(x=>({id:x[0],name:x[1],price:x[2],old:x[3],cat:x[4],emoji:x[5],img:x[6]}));
 
 let cart=JSON.parse(localStorage.getItem('qb_cart')||'{}');
 let wish=JSON.parse(localStorage.getItem('qb_wishlist')||'[]');
